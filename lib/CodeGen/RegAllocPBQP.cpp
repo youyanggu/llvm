@@ -350,7 +350,7 @@ public:
         unsigned DstReg = CP.getDstReg();
         unsigned SrcReg = CP.getSrcReg();
 
-        const float CopyFactor = 0.5; // Cost of copy relative to load. Current
+        const float CopyFactor = 100; // Cost of copy relative to load. Current
                                       // value plucked randomly out of the air.
 
         PBQP::PBQPNum CBenefit =
