@@ -87,7 +87,7 @@ namespace {
 
     // Default unroll count for loops with run-time trip count if
     // -unroll-count is not set
-    static const unsigned UnrollRuntimeCount = 800;
+    static const unsigned UnrollRuntimeCount = 8;
 
     unsigned CurrentCount;
     unsigned CurrentThreshold;
