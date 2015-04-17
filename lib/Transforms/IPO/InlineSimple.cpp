@@ -23,6 +23,7 @@
 #include "llvm/IR/IntrinsicInst.h"
 #include "llvm/IR/Module.h"
 #include "llvm/IR/Type.h"
+#include "llvm/Support/CommandLine.h"
 #include "llvm/Transforms/IPO/InlinerPass.h"
 
 using namespace llvm;
@@ -59,8 +60,14 @@ public:
   void getAnalysisUsage(AnalysisUsage &AU) const override;
 };
 
+static cl::opt<int>
+OptLevelsThreshold("optlevels-threshold", cl::Hidden, cl::init(275),
+              cl::desc("Threshold for inlining functions with inline hint"));
+
+
 static int computeThresholdFromOptLevels(unsigned OptLevel,
                                          unsigned SizeOptLevel) {
+  //return OptLevelsThreshold;
   if (OptLevel > 2)
     return 275;
   if (SizeOptLevel == 1) // -Os
@@ -69,6 +76,7 @@ static int computeThresholdFromOptLevels(unsigned OptLevel,
     return 25;
   return 225;
 }
+
 
 } // end anonymous namespace
 

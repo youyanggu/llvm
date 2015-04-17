@@ -20,11 +20,24 @@
 #include "llvm/IR/Instructions.h"
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Metadata.h"
+#include "llvm/Support/CommandLine.h"
 #include "llvm/Support/Debug.h"
 
 using namespace llvm;
 
 #define DEBUG_TYPE "branch-prob"
+static cl::opt<uint32_t>
+LBH_TAKEN_WEIGHT("lbh-taken-weight", cl::Hidden, cl::init(124),
+              cl::desc("Injected command line 1"));
+
+static cl::opt<uint32_t>
+LBH_NONTAKEN_WEIGHT("lbh-nontaken-weight", cl::Hidden, cl::init(4),
+              cl::desc("Injected command line 2"));
+/*
+static cl::opt<uint32_t>
+NORMAL_WEIGHT("normal-weight", cl::Hidden, cl::init(16),
+              cl::desc("Injected command line 3"));
+*/
 
 INITIALIZE_PASS_BEGIN(BranchProbabilityInfo, "branch-prob",
                       "Branch Probability Analysis", false, true)
@@ -54,8 +67,8 @@ char BranchProbabilityInfo::ID = 0;
 //
 // Probability of the edge BB2->BB1 = 124 / (124 + 4) = 0.96875
 // Probability of the edge BB2->BB3 = 4 / (124 + 4) = 0.03125
-static const uint32_t LBH_TAKEN_WEIGHT = 124;
-static const uint32_t LBH_NONTAKEN_WEIGHT = 4;
+//static const uint32_t LBH_TAKEN_WEIGHT = 124;
+//static const uint32_t LBH_NONTAKEN_WEIGHT = 4;
 
 /// \brief Unreachable-terminating branch taken weight.
 ///

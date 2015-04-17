@@ -48,10 +48,14 @@ using namespace llvm;
 /// cannot be involved in a cycle.
 const unsigned MaxNumPhiBBsValueReachabilityCheck = 20;
 
+static cl::opt<int>
+MaxLookupSearchDepth("maxlookup-searchdepth", cl::Hidden, cl::init(6),
+              cl::desc("Max limit of the search depth."));
+
 // The max limit of the search depth in DecomposeGEPExpression() and
 // GetUnderlyingObject(), both functions need to use the same search
 // depth otherwise the algorithm in aliasGEP will assert.
-static const unsigned MaxLookupSearchDepth = 6;
+//static const unsigned MaxLookupSearchDepth = 6;
 
 //===----------------------------------------------------------------------===//
 // Useful predicates

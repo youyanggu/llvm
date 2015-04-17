@@ -30,6 +30,7 @@
 #include "llvm/IR/IntrinsicInst.h"
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/PredIteratorCache.h"
+#include "llvm/Support/CommandLine.h"
 #include "llvm/Support/Debug.h"
 using namespace llvm;
 
@@ -48,11 +49,19 @@ STATISTIC(NumUncacheNonLocalPtr,
 STATISTIC(NumCacheCompleteNonLocalPtr,
           "Number of block queries that were completely cached");
 
+static cl::opt<unsigned>
+BlockScanLimit("block-scan-limit", cl::Hidden, cl::init(100),
+              cl::desc("Injected command line 1"));
+
+static cl::opt<unsigned>
+NumResultsLimit("num-results-limit", cl::Hidden, cl::init(100),
+              cl::desc("Injected command line 2"));
+
 // Limit for the number of instructions to scan in a block.
-static const unsigned int BlockScanLimit = 100;
+//static const unsigned int BlockScanLimit = 100;
 
 // Limit on the number of memdep results to process.
-static const unsigned int NumResultsLimit = 100;
+//static const unsigned int NumResultsLimit = 100;
 
 char MemoryDependenceAnalysis::ID = 0;
 

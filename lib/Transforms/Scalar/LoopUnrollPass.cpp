@@ -35,6 +35,21 @@ using namespace llvm;
 #define DEBUG_TYPE "loop-unroll"
 
 static cl::opt<unsigned>
+UnrollRuntimeCount("unroll-runtime-count", cl::init(8), cl::Hidden,
+  cl::desc("Use this unroll count for all loops including those with "
+           "unroll_count pragma values, for testing purposes"));
+
+static cl::opt<unsigned>
+NoThreshold("no-threshold", cl::init(UINT_MAX), cl::Hidden,
+  cl::desc("Use this unroll count for all loops including those with "
+           "unroll_count pragma values, for testing purposes"));
+
+static cl::opt<unsigned>
+OptSizeUnrollThreshold("optsize-unroll-threshold", cl::init(50), cl::Hidden,
+  cl::desc("Use this unroll count for all loops including those with "
+           "unroll_count pragma values, for testing purposes"));
+
+static cl::opt<unsigned>
 UnrollThreshold("unroll-threshold", cl::init(150), cl::Hidden,
   cl::desc("The cut-off point for automatic loop unrolling"));
 
@@ -79,15 +94,15 @@ namespace {
     /// A magic value for use with the Threshold parameter to indicate
     /// that the loop unroll should be performed regardless of how much
     /// code expansion would result.
-    static const unsigned NoThreshold = UINT_MAX;
+    //static const unsigned NoThreshold = UINT_MAX;
 
     // Threshold to use when optsize is specified (and there is no
     // explicit -unroll-threshold).
-    static const unsigned OptSizeUnrollThreshold = 50;
+    //static const unsigned OptSizeUnrollThreshold = 50;
 
     // Default unroll count for loops with run-time trip count if
     // -unroll-count is not set
-    static const unsigned UnrollRuntimeCount = 8;
+    //static const unsigned UnrollRuntimeCount = 8;
 
     unsigned CurrentCount;
     unsigned CurrentThreshold;

@@ -61,8 +61,12 @@ static cl::opt<int>
 ColdThreshold("inlinecold-threshold", cl::Hidden, cl::init(225),
               cl::desc("Threshold for inlining functions with cold attribute"));
 
+static cl::opt<int>
+OptSizeThreshold("optsize-threshold", cl::Hidden, cl::init(75),
+              cl::desc("Threshold for inlining functions with inline hint"));
+
 // Threshold to use when optsize is specified (and there is no -inline-limit).
-const int OptSizeThreshold = 75;
+//const int OptSizeThreshold = 75;
 
 Inliner::Inliner(char &ID) 
   : CallGraphSCCPass(ID), InlineThreshold(InlineLimit), InsertLifetime(true) {}

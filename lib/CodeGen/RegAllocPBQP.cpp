@@ -70,6 +70,11 @@ PBQPCoalescing("pbqp-coalescing",
                 cl::desc("Attempt coalescing during PBQP register allocation."),
                 cl::init(false), cl::Hidden);
 
+static cl::opt<int>
+CopyFactor("copy-factor",
+                cl::desc("Injected variable."),
+                cl::init(50), cl::Hidden);
+
 #ifndef NDEBUG
 static cl::opt<bool>
 PBQPDumpGraphs("pbqp-dump-graphs",
@@ -350,11 +355,11 @@ public:
         unsigned DstReg = CP.getDstReg();
         unsigned SrcReg = CP.getSrcReg();
 
-        const float CopyFactor = 0.5; // Cost of copy relative to load. Current
+        //const float CopyFactor = 0.5; // Cost of copy relative to load. Current
                                       // value plucked randomly out of the air.
 
         PBQP::PBQPNum CBenefit =
-          CopyFactor * LiveIntervals::getSpillWeight(false, true, &MBFI, &MI);
+          CopyFactor / 100.0 * LiveIntervals::getSpillWeight(false, true, &MBFI, &MI);
 
         if (CP.isPhys()) {
           if (!MF.getRegInfo().isAllocatable(DstReg))

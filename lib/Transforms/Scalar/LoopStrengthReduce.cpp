@@ -83,7 +83,7 @@ using namespace llvm;
 /// bail out. This threshold is far beyond the number of users that LSR can
 /// conceivably solve, so it should not affect generated code, but catches the
 /// worst cases before LSR burns too much compile time and stack space.
-static const unsigned MaxIVUsers = 200;
+//static const unsigned MaxIVUsers = 200;
 
 // Temporary flag to cleanup congruent phis after LSR phi expansion.
 // It's currently disabled until we can determine whether it's truly useful or
@@ -92,6 +92,14 @@ static const unsigned MaxIVUsers = 200;
 static cl::opt<bool> EnablePhiElim(
   "enable-lsr-phielim", cl::Hidden, cl::init(true),
   cl::desc("Enable LSR phi elimination"));
+
+static cl::opt<unsigned> MaxIVUsers(
+  "max-iv-users", cl::Hidden, cl::init(200),
+  cl::desc("injected command line"));
+
+static cl::opt<unsigned> MaxChainsOld(
+  "max-chains", cl::Hidden, cl::init(8),
+  cl::desc("injected command line2"));
 
 #ifndef NDEBUG
 // Stress test IV chain generation.
